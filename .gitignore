@@ -1,6 +1,6 @@
 
-# Created by https://www.gitignore.io/api/web,macos,linux,windows,webstorm
-# Edit at https://www.gitignore.io/?templates=web,macos,linux,windows,webstorm
+# Created by https://www.gitignore.io/api/macos,linux,windows,webstorm
+# Edit at https://www.gitignore.io/?templates=macos,linux,windows,webstorm
 
 ### Linux ###
 *~
@@ -44,19 +44,6 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
-
-### Web ###
-*.asp
-*.cer
-*.csr
-*.css
-*.htm
-*.html
-*.js
-*.jsp
-*.php
-*.rss
-*.xhtml
 
 ### WebStorm ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and WebStorm
@@ -162,4 +149,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 
-# End of https://www.gitignore.io/api/web,macos,linux,windows,webstorm
+# End of https://www.gitignore.io/api/macos,linux,windows,webstorm

@@ -1,8 +1,6 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/p5.js"></script>
 
 <script>
-    let shadeOfGray;
-
     function setup() {
         createCanvas(800, 600);
     }
@@ -11,6 +9,7 @@
         //noprotect
         background(100);
 
+        let shadeOfGray;
         let k = 256 / width;
 
         for (let x = 0; x < width; x++) {
