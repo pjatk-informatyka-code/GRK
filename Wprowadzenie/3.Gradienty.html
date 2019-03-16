@@ -1,0 +1,32 @@
+<script src="//cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/p5.js"></script>
+
+<script>
+    function setup() {
+        createCanvas(800, 600);
+    }
+
+    function draw() {
+        //noprotect
+        background(100);
+
+        let scale = 2;
+        let z = width;
+        let halfW = width / 2;
+        let halfH = height / 2;
+
+        let dx, dy;
+        let dhalf = sqrt(halfW*halfW+halfH*halfH);
+
+        for (let x = 0; x < width; x++, z--) {
+            dx = x - halfW;
+            for (let y = 0; y < height; y++){
+                dy = y - halfH;
+                let d = sqrt(dx*dx+dy*dy) * scale;
+                let circleColor = color((dhalf - d) / dhalf * 255, (d / dhalf) * 255, 255 * max(0, y - z) / width);
+                set(x, y, circleColor);
+            }
+        }
+
+        updatePixels();
+    }
+</script>
