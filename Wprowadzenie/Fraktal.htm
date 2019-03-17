@@ -1,0 +1,43 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/p5.js"></script>
+
+<script>
+
+function setup() {
+  createCanvas(800,600);
+  frameRate(25);
+}
+function draw() {
+  background(0);
+  stroke(color(255));
+
+  var punkt1 = {x:width*.3, y:height*.8};
+  var punkt2 = {x:width*.7, y:height*.8};
+  var punkt3 = {x:width*.5, y:height*.3};
+  var tmp = punkt1;
+
+  point(punkt1.x, punkt1.y);
+  point(punkt2.x, punkt2.y);
+  point(punkt3.x, punkt3.y);
+
+  for(var i = 30000; i>=0; i--){
+    let rand = floor(random(0, 3));
+    
+    switch (rand) {
+      case 0:
+        tmp = {x:(tmp.x+punkt1.x)/2, y:(tmp.y+punkt1.y)/2};
+        break;
+      case 1:
+        tmp = {x:(tmp.x+punkt2.x)/2, y:(tmp.y+punkt2.y)/2};
+        break;
+      default:
+        tmp = {x:(tmp.x+punkt3.x)/2, y:(tmp.y+punkt3.y)/2};
+        break;
+    }
+
+    point(tmp.x, tmp.y);
+  }
+
+  updatePixels();
+}
+
+</script>

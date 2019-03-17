@@ -1,0 +1,49 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.7.3/p5.js"></script>
+
+<script>
+
+function setup() {
+  createCanvas(800,600);
+  noLoop();
+}
+function draw() {
+  background(0);
+  // Tło
+  for(x = 0; x<width; x++){
+    for(y = 0;y<height; y++){
+      c = color(50, 150, 200);
+      set(x,y,c);
+    }
+  }
+  // Trawa
+  for(x = 0; x<width; x++){
+    for(y = height*.7;y<height; y++){
+      c = color(50,200,50);
+      // Kwiatki
+      if(floor(random(0,50)) == 1){
+        c = color(floor(random(0,255)),floor(random(0,255)),floor(random(0,255)));
+      }
+      set(x,y,c);
+    }
+  }
+  // Fasada
+  for(x = width*0.3; x<width*.7; x++){
+    for(y = height*.4;y<height*.7; y++){
+      c = color(150,75,0);
+      set(x,y,c);
+    }
+  }
+  // Dach
+  for(var y=height*.2, w = width*.5, p = width*.5; y<height*.4; y++, w+=2, p-=2) {
+    c = color(255,0,0);
+    var t = w;
+    for(;t>p;t--){
+      set(t,y,c);
+    }
+  }
+
+  updatePixels();
+  noLoop();
+}
+
+</script>
