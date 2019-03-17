@@ -11,6 +11,12 @@
 
     function setup() {
         createCanvas(800, 600);
+    }
+
+    function draw() {
+        //noprotect
+        noLoop();
+        background(100);
 
         for (let i = 0; i < 1000; i++) {
             let x = floor(random(0, width));
@@ -23,11 +29,6 @@
 
             grassCords[x][y] = randomColor;
         }
-    }
-
-    function draw() {
-        //noprotect
-        background(100);
 
         for (let x = 0, xr = width; x < width; x++, xr--) {
             for (let y = 0, k = 1, j = height * 2; y < height; y++, k+=2, j-=2){
