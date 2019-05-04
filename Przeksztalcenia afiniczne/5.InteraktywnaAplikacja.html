@@ -1,19 +1,81 @@
 <a href="index.html">.</a></br>
 </br>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/p5.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.5.7/p5.min.js"></script>
 
 <style>
-    body {
-        background-color: #cccccc;
+    #wrapper {
+        width: 800px;
+        overflow: hidden;
+    }
+
+    #UI {
+        width: 250px;
+        float: left;
+        margin-right: 20px;
+    }
+
+    #canvas {
+        overflow: hidden;
+        width: 512px;
+    }
+
+    #section {
+        margin-bottom: 10px;
+        border: 2px solid black;
+    }
+
+    input {
+        width: 85px;
     }
 </style>
+
+<div id="wrapper">
+    <div id="UI">
+        <div id="section">
+            To reset canvas click <button onclick="resetCanvas()">Reset (r)</button>
+        </div>
+        <div id="section">
+            <input type="range" value=0 min=-100 max=100 step=1 id="translateX"
+                oninput="translateXoutput.value = translateX.value"><output id="translateXoutput">0</output>
+            <input type="range" value=0 min=-100 max=100 step=1 id="translateY"
+                oninput="translateYoutput.value = translateY.value"><output id="translateYoutput">0</output>
+            <p></p>
+            To translate canvas click <button onclick="translateCanvas()">Translate (t)</button>
+        </div>
+        <div id="section">
+            <input type="range" value=0 min=0 max=360 step=1 id="rotateVal"
+                oninput="rotateValOutput.value = rotateVal.value"><output id="rotateValOutput">0</output>
+            <p></p>
+            To rotate canvas click <button onclick="rotateCanvas()">Rotate (o)</button>
+        </div>
+        <div id="section">
+            <input type="range" value=0 min=0.05 max=3 step=0.05 id="scaleX"
+                oninput="scaleXoutput.value = scaleX.value"><output id="scaleXoutput">0</output>
+            <input type="range" value=0 min=0.05 max=3 step=0.05 id="scaleY"
+                oninput="scaleYoutput.value = scaleY.value"><output id="scaleYoutput">0</output>
+            <p></p>
+            To scale canvas click <button onclick="scaleCanvas()">Scale (s)</button>
+        </div>
+        <div id="section">
+            <input type="range" value=0 min=-2 max=2 step=0.05 id="shearKS"
+                oninput="shearKSoutput.value = shearKS.value"><output id="shearKSoutput">0</output>
+            <input type="range" value=0 min=-2 max=2 step=0.05 id="shearYG"
+                oninput="shearYGoutput.value = shearYG.value"><output id="shearYGoutput">0</output>
+            <p></p>
+            To shear canvas click <button onclick="shearCanvas()">Shear (h)</button>
+        </div>
+    </div>
+    <div id="canvas"></div>
+</div>
 <script>
     var imgA;
     var imgB;
+    var currMatrix = makeIdentity();
 
     function setup() {
-        createCanvas(512, 512);
+        createCanvas(512, 512).parent('canvas');
+
         background(255);
         imgA = createImage(512, 512);
         imgB = createImage(512, 512);
@@ -38,10 +100,68 @@
         if (!keyIsDown(32)) {
             image(imgA, 0, 0);
             text('Image A', 10, 20);
-        }
-        else {
+        } else {
             image(imgB, 0, 0);
             text('Image B', 10, 20);
         }
+    }
+    function makeVector(x, y) {
+        return [x, y, 1];
+    }
+
+    function drawVector(img, vec) {
+        img.loadPixels();
+        img.set(vec[0], vec[1], 0);
+        img.updatePixels();
+    }
+
+    function mouseDragged() {
+        v = makeVector(mouseX, mouseY);
+        drawVector(imgA, v);
+        drawVector(imgB, transform(multiply(makeScale(0.5, 0.5), makeShift(128, 128)), v));
+        //drawVector(imgB, transform(makeShift(0, -50), v));
+        //drawVector(imgB, transform(makeScale(0.5, 0.5), v));
+        //drawVector(imgB, transform(makeRotate(Math.PI/2.0), v));
+        //drawVector(imgB, transform(makeShear(0.5, 0.1), v));
+    }
+
+    function makeIdentity() {
+        return [[1, 0, 0], [0, 1, 0], [0, 0, 1]];
+    }
+
+    function makeShift(tx, ty) {
+        return [[1, 0, tx], [0, 1, ty], [0, 0, 1]];
+    }
+
+    function makeScale(sx, sy) {
+        return [[sx, 0, 0], [0, sy, 0], [0, 0, 1]];
+    }
+
+    function makeRotate(fi) {
+        return [[Math.cos(fi), -Math.sin(fi), 0], [Math.sin(fi), -Math.cos(fi), 0], [0, 0, 1]];
+    }
+
+    function makeShear(shx, shy) {
+        return [[1, shx, 0], [shy, 1, 0], [0, 0, 1]];
+    }
+
+    function transform(matrix, vector) {
+        value = [0.0, 0.0, 0.0];
+        for (i = 0; i < 3; ++i) {
+            for (j = 0; j < 3; ++j) {
+                value[i] += matrix[i][j] * vector[j];
+            }
+        }
+        return value;
+    }
+
+    function multiply(mx1, mx2) {
+        value = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
+        for (i = 0; i < 3; ++i) {
+            for (j = 0; j < 3; ++j) {
+                value[i][j] = mx1[i][j] * mx2[i][j];
+            }
+        }
+        return value;
     }
 </script>
